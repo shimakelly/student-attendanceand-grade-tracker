@@ -47,4 +47,9 @@ public class TeacherService {
         teacherRepo.deleteById(id);
         return "Teacher deleted successfully";
     }
+
+    // C1: JPQL (JOIN on collection, LOWER) - Teachers by course name
+    public List<Teacher> getTeachersByCourse(String courseName) {
+        return teacherRepo.findByCourseName(courseName);
+    }
 }

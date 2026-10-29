@@ -55,4 +55,11 @@ public class TeacherController {
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    // C1: Teachers by course
+    @GetMapping(value = "/by-course", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getTeachersByCourse(@RequestParam String name) {
+        List<Teacher> teachers = teacherService.getTeachersByCourse(name);
+        return new ResponseEntity<>(teachers, HttpStatus.OK);
+    }
 }

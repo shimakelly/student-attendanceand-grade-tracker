@@ -1,15 +1,18 @@
-﻿package auca.tracker.service;
+package auca.tracker.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import auca.tracker.domain.Course;
 import auca.tracker.repository.CourseRepository;
 
 @Service
 public class CourseService {
+
     @Autowired
     private CourseRepository courseRepo;
 
@@ -44,5 +47,10 @@ public class CourseService {
         }
         courseRepo.deleteById(id);
         return "Course deleted successfully";
+    }
+
+    // C3: Courses nobody holds
+    public List<Course> getUnusedCourses() {
+        return courseRepo.findUnusedCourses();
     }
 }

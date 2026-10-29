@@ -1,17 +1,28 @@
-﻿package auca.tracker.service;
+package auca.tracker.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import auca.tracker.domain.Student;
+import auca.tracker.repository.AssessmentRepository;
 import auca.tracker.repository.StudentRepository;
+import auca.tracker.repository.TeacherRepository;
 
 @Service
 public class StudentService {
+
     @Autowired
     private StudentRepository studentRepo;
+
+    @Autowired
+    private TeacherRepository teacherRepo;
+
+    @Autowired
+    private AssessmentRepository assessmentRepo;
 
     public String saveStudent(Student student) {
         studentRepo.save(student);
@@ -52,5 +63,14 @@ public class StudentService {
     // B1: DERIVED (IgnoreCase, OrderBy) - Find students by lastName
     public List<Student> getStudentsByLastName(String lastName) {
         return studentRepo.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    // C4: JPQL (DISTINCT, path navigation) - Students of a teacher
+    public Optional<List<Student>> getStudentsOfTeacher(UUID teacherId) {
+        if (!teacherRepo.existsById(teacherId)) {
+            return Optional.empty();
+        }
+        List<Student> students = assessmentRepo.findStudentsByTeacherId(teacherId);
+        return Optional.of(students);
     }
 }

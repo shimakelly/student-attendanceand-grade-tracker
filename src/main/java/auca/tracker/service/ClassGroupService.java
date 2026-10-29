@@ -1,15 +1,18 @@
-﻿package auca.tracker.service;
+package auca.tracker.service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import auca.tracker.domain.ClassGroup;
 import auca.tracker.repository.ClassGroupRepository;
 
 @Service
 public class ClassGroupService {
+
     @Autowired
     private ClassGroupRepository classGroupRepo;
 
@@ -45,5 +48,10 @@ public class ClassGroupService {
         }
         classGroupRepo.deleteById(id);
         return "Class group deleted successfully";
+    }
+
+    // C2: Free class groups
+    public List<ClassGroup> getFreeClassGroups() {
+        return classGroupRepo.findFreeClassGroups();
     }
 }
