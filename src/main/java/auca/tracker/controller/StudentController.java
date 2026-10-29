@@ -55,4 +55,11 @@ public class StudentController {
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    // B1: Find students by lastName
+    @GetMapping(value = "/by-last-name", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getStudentsByLastName(@RequestParam String lastName) {
+        List<Student> students = studentService.getStudentsByLastName(lastName);
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }
 }

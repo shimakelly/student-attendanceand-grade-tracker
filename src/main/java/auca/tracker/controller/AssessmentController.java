@@ -1,5 +1,6 @@
 ﻿package auca.tracker.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import auca.tracker.domain.Assessment;
+import auca.tracker.domain.AssessmentStatus;
 import auca.tracker.service.AssessmentService;
 
 @RestController
@@ -54,5 +56,21 @@ public class AssessmentController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    // B2: Assessments by status
+    @GetMapping(value = "/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAssessmentsByStatus(@RequestParam AssessmentStatus status) {
+        List<Assessment> assessments = assessmentService.getAssessmentsByStatus(status);
+        return new ResponseEntity<>(assessments, HttpStatus.OK);
+    }
+
+    // B3: Assessments in a date range
+    @GetMapping(value = "/between", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAssessmentsBetween(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        List<Assessment> assessments = assessmentService.getAssessmentsBetween(startDate, endDate);
+        return new ResponseEntity<>(assessments, HttpStatus.OK);
     }
 }

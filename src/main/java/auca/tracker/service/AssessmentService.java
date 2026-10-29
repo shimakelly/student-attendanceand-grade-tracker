@@ -1,11 +1,13 @@
 ﻿package auca.tracker.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import auca.tracker.domain.Assessment;
+import auca.tracker.domain.AssessmentStatus;
 import auca.tracker.repository.AssessmentRepository;
 
 @Service
@@ -49,5 +51,15 @@ public class AssessmentService {
         }
         assessmentRepo.deleteById(id);
         return "Assessment deleted successfully";
+    }
+
+    // B2: DERIVED (enum parameter, OrderBy) - Assessments by status
+    public List<Assessment> getAssessmentsByStatus(AssessmentStatus status) {
+        return assessmentRepo.findByStatusOrderByAssessmentDateAsc(status);
+    }
+
+    // B3: DERIVED (Between) - Assessments in a date range
+    public List<Assessment> getAssessmentsBetween(LocalDate start, LocalDate end) {
+        return assessmentRepo.findByAssessmentDateBetweenOrderByAssessmentDateAsc(start, end);
     }
 }

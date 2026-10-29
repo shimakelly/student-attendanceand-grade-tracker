@@ -48,4 +48,9 @@ public class StudentService {
         studentRepo.deleteById(id);
         return "Student deleted successfully";
     }
+
+    // B1: DERIVED (IgnoreCase, OrderBy) - Find students by lastName
+    public List<Student> getStudentsByLastName(String lastName) {
+        return studentRepo.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }
