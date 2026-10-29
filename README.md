@@ -6,7 +6,7 @@
 **Student Name:** SHIMA Kelly Guy  
 **Student ID:** 27114  
 **Project Name:** Student Attendance and Grade Tracker  
-**Repository Name:** `student-attendanceand-grade-tracker-backend`  
+**Repository Name:** `student-attendanceand-grade-tracker`  
 
 ---
 
