@@ -55,7 +55,6 @@ public class AssessmentController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // A2 & E3: Delete and protect
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteAssessment(@PathVariable UUID id) {
         String message = assessmentService.deleteAssessment(id);
@@ -91,6 +90,21 @@ public class AssessmentController {
         if (message.contains("Cannot change status")) {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    // F1: Assessments per status
+    @GetMapping(value = "/stats/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getStatsByStatus() {
+        List<Object[]> stats = assessmentService.getStatsByStatus();
+        return new ResponseEntity<>(stats, HttpStatus.OK);
+    }
+
+    // F2: Teacher is absent
+    @PatchMapping(value = "/cancel-day", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> cancelDay(@RequestParam UUID teacherId, @RequestParam String date) {
+        LocalDate cancelDate = LocalDate.parse(date);
+        String message = assessmentService.cancelDayForTeacher(teacherId, cancelDate);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

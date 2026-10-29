@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import auca.tracker.domain.Assessment;
 import auca.tracker.domain.AssessmentStatus;
 import auca.tracker.repository.AssessmentRepository;
@@ -74,7 +75,6 @@ public class AssessmentService {
         return "Assessment updated successfully";
     }
 
-    // A2 & E3: Delete and protect
     public String deleteAssessment(UUID id) {
         Optional<Assessment> optionalAssessment = assessmentRepo.findById(id);
         if (optionalAssessment.isEmpty()) {
@@ -118,5 +118,19 @@ public class AssessmentService {
         assessment.setStatus(newStatus);
         assessmentRepo.save(assessment);
         return "Assessment status updated successfully";
+    }
+
+    // F1: JPQL (GROUP BY, COUNT) - Assessments per status
+    public List<Object[]> getStatsByStatus() {
+        return assessmentRepo.countAssessmentsPerStatus();
+    }
+
+    // F2: JPQL (UPDATE, @Modifying, @Transactional) - Teacher is absent
+    @Transactional
+    public String cancelDayForTeacher(UUID teacherId, LocalDate date) {
+        int updatedCount = assessmentRepo.cancelDayForTeacher(
+            teacherId, date, AssessmentStatus.ABSENT, AssessmentStatus.GRADED
+        );
+        return updatedCount + " assessments cancelled";
     }
 }
