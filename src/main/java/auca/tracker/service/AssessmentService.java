@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import auca.tracker.domain.Assessment;
 import auca.tracker.domain.AssessmentStatus;
 import auca.tracker.repository.AssessmentRepository;
+import auca.tracker.repository.ScoreEntryRepository;
 import auca.tracker.repository.StudentRepository;
 import auca.tracker.repository.TeacherRepository;
 
@@ -23,26 +24,24 @@ public class AssessmentService {
     @Autowired
     private TeacherRepository teacherRepo;
 
-    // A2 & D1: Safe saving
+    @Autowired
+    private ScoreEntryRepository scoreEntryRepo;
+
     public String saveAssessment(Assessment assessment) {
         if (assessment.getAssessmentDate() == null || assessment.getAssessmentDate().isBefore(LocalDate.now())) {
             return "Assessment date cannot be in the past";
         }
-
         if (assessment.getStudent() != null && assessment.getStudent().getId() != null) {
             studentRepo.findById(assessment.getStudent().getId()).ifPresent(assessment::setStudent);
         }
         if (assessment.getTeacher() != null && assessment.getTeacher().getId() != null) {
             teacherRepo.findById(assessment.getTeacher().getId()).ifPresent(assessment::setTeacher);
         }
-
         if (assessment.getTeacher() != null &&
             assessmentRepo.existsByTeacherAndAssessmentDateAndStatusNot(
                 assessment.getTeacher(), assessment.getAssessmentDate(), AssessmentStatus.ABSENT)) {
             return "Teacher already has an assessment on that date";
         }
-
-        // A new assessment always starts as PLANNED, whatever status the JSON body contains
         assessment.setStatus(AssessmentStatus.PLANNED);
         assessmentRepo.save(assessment);
         return "Assessment saved successfully";
@@ -56,7 +55,6 @@ public class AssessmentService {
         return assessmentRepo.findById(id);
     }
 
-    // A2 & D2: PUT update must no longer change the status
     public String updateAssessment(UUID id, Assessment updatedAssessment) {
         Optional<Assessment> optionalAssessment = assessmentRepo.findById(id);
         if (optionalAssessment.isEmpty()) {
@@ -72,31 +70,32 @@ public class AssessmentService {
         if (updatedAssessment.getTeacher() != null && updatedAssessment.getTeacher().getId() != null) {
             teacherRepo.findById(updatedAssessment.getTeacher().getId()).ifPresent(existing::setTeacher);
         }
-        // Status is not changed here; only changed via D2 status flow endpoint
         assessmentRepo.save(existing);
         return "Assessment updated successfully";
     }
 
+    // A2 & E3: Delete and protect
     public String deleteAssessment(UUID id) {
         Optional<Assessment> optionalAssessment = assessmentRepo.findById(id);
         if (optionalAssessment.isEmpty()) {
             return "The assessment with that id does not exist";
         }
+        Assessment existing = optionalAssessment.get();
+        if (scoreEntryRepo.existsByAssessment(existing)) {
+            return "That assessment has score entries, delete them first";
+        }
         assessmentRepo.deleteById(id);
         return "Assessment deleted successfully";
     }
 
-    // B2: DERIVED (enum parameter, OrderBy) - Assessments by status
     public List<Assessment> getAssessmentsByStatus(AssessmentStatus status) {
         return assessmentRepo.findByStatusOrderByAssessmentDateAsc(status);
     }
 
-    // B3: DERIVED (Between) - Assessments in a date range
     public List<Assessment> getAssessmentsBetween(LocalDate start, LocalDate end) {
         return assessmentRepo.findByAssessmentDateBetweenOrderByAssessmentDateAsc(start, end);
     }
 
-    // D2: Status flow
     public String updateStatus(UUID id, AssessmentStatus newStatus) {
         Optional<Assessment> optionalAssessment = assessmentRepo.findById(id);
         if (optionalAssessment.isEmpty()) {

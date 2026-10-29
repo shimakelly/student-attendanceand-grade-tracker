@@ -19,7 +19,6 @@ public class AssessmentController {
     @Autowired
     private AssessmentService assessmentService;
 
-    // A2 & D1: Safe saving
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveAssessment(@RequestBody Assessment assessment) {
         String message = assessmentService.saveAssessment(assessment);
@@ -56,11 +55,15 @@ public class AssessmentController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    // A2 & E3: Delete and protect
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteAssessment(@PathVariable UUID id) {
         String message = assessmentService.deleteAssessment(id);
         if (message.contains("does not exist")) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        if (message.contains("delete them first")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -79,7 +82,6 @@ public class AssessmentController {
         return new ResponseEntity<>(assessments, HttpStatus.OK);
     }
 
-    // D2: Status flow
     @PatchMapping(value = "/{id}/status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateStatus(@PathVariable UUID id, @RequestParam AssessmentStatus status) {
         String message = assessmentService.updateStatus(id, status);
