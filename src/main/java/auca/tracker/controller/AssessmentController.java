@@ -19,9 +19,16 @@ public class AssessmentController {
     @Autowired
     private AssessmentService assessmentService;
 
+    // A2 & D1: Safe saving
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveAssessment(@RequestBody Assessment assessment) {
         String message = assessmentService.saveAssessment(assessment);
+        if (message.contains("past")) {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+        if (message.contains("already has")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
@@ -58,19 +65,30 @@ public class AssessmentController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // B2: Assessments by status
     @GetMapping(value = "/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAssessmentsByStatus(@RequestParam AssessmentStatus status) {
         List<Assessment> assessments = assessmentService.getAssessmentsByStatus(status);
         return new ResponseEntity<>(assessments, HttpStatus.OK);
     }
 
-    // B3: Assessments in a date range
     @GetMapping(value = "/between", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAssessmentsBetween(@RequestParam String start, @RequestParam String end) {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
         List<Assessment> assessments = assessmentService.getAssessmentsBetween(startDate, endDate);
         return new ResponseEntity<>(assessments, HttpStatus.OK);
+    }
+
+    // D2: Status flow
+    @PatchMapping(value = "/{id}/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateStatus(@PathVariable UUID id, @RequestParam AssessmentStatus status) {
+        String message = assessmentService.updateStatus(id, status);
+        if (message.contains("does not exist")) {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        if (message.contains("Cannot change status")) {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
