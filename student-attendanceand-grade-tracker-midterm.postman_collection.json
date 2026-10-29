@@ -1,0 +1,754 @@
+﻿{
+	"info": {
+		"_postman_id": "a47d825c-8d19-4809-9132-e0be951a812b",
+		"name": "Student Attendance and Grade Tracker API - Mid-Term Exam",
+		"description": "Student: SHIMA Kelly Guy (ID: 27114)\nProject: Student Attendance and Grade Tracker\nWeb Technology and Internet - AUCA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "teacherId",
+			"value": "73233b8e-9193-45bc-8d4b-05a34547d3ae",
+			"type": "string"
+		},
+		{
+			"key": "teacherDavidId",
+			"value": "943b038d-83c6-4d01-a128-299b681e01ad",
+			"type": "string"
+		},
+		{
+			"key": "studentId",
+			"value": "09841c57-523a-40bf-bd7c-f7be51d58b14",
+			"type": "string"
+		},
+		{
+			"key": "studentNumber",
+			"value": "STU-2026-088",
+			"type": "string"
+		},
+		{
+			"key": "courseId",
+			"value": "46520349-34a4-4284-82f8-3784962ec8ec",
+			"type": "string"
+		},
+		{
+			"key": "classGroupId",
+			"value": "d54d0c4b-0723-4aef-b74f-d8b6282d0bd8",
+			"type": "string"
+		},
+		{
+			"key": "assessmentId",
+			"value": "e612179c-9a33-4021-868f-4e2e6a697242",
+			"type": "string"
+		},
+		{
+			"key": "gradedAssessmentId",
+			"value": "9c3c4309-bbcf-4607-890a-0ecbf5617e7c",
+			"type": "string"
+		},
+		{
+			"key": "plannedAssessmentId",
+			"value": "dec53d92-7ed9-4fef-bd28-40d99e565565",
+			"type": "string"
+		},
+		{
+			"key": "scoreEntryId",
+			"value": "f2272d87-0446-4296-b287-44b55284b618",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Part A: Domain Model and CRUD",
+			"item": [
+				{
+					"name": "A2 - Save Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"History\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "save"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "all"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get Course By ID (Success)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/{{courseId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "{{courseId}}"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get Course By ID (404 Not Found)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/01234567-89ab-cdef-0123-456789abcdef",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "01234567-89ab-cdef-0123-456789abcdef"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Save Class Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"groupNumber\": 5,\n    \"name\": \"Group 5\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/class-groups/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "class-groups", "save"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get All Class Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/class-groups/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "class-groups", "all"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Save Teacher",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Patrick\",\n    \"lastName\": \"Kwizera\",\n    \"email\": \"patrick@school.rw\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "save"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get All Teachers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "all"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Save Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Sonia\",\n    \"lastName\": \"Uwimana\",\n    \"studentNumber\": \"STU-2026-099\",\n    \"email\": \"sonia@student.rw\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/students/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "save"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "all"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Get All Assessments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "all"]
+						}
+					}
+				},
+				{
+					"name": "A2 - Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Mathematics Advanced\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/update/{{courseId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "update", "{{courseId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Part B: Derived Queries",
+			"item": [
+				{
+					"name": "B1 - Find students by lastName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/by-last-name?lastName=shima",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "by-last-name"],
+							"query": [
+								{
+									"key": "lastName",
+									"value": "shima"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "B2 - Assessments by status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/by-status?status=PLANNED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "by-status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "PLANNED"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "B3 - Assessments in a date range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/between?start=2026-10-01&end=2026-10-31",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "between"],
+							"query": [
+								{
+									"key": "start",
+									"value": "2026-10-01"
+								},
+								{
+									"key": "end",
+									"value": "2026-10-31"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Part C: JPQL with Joins",
+			"item": [
+				{
+					"name": "C1 - Teachers by course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/by-course?name=bio",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "by-course"],
+							"query": [
+								{
+									"key": "name",
+									"value": "bio"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "C2 - Free class groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/class-groups/free",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "class-groups", "free"]
+						}
+					}
+				},
+				{
+					"name": "C3 - Courses nobody holds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/courses/unused",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "courses", "unused"]
+						}
+					}
+				},
+				{
+					"name": "C4 - Students of a teacher (Success)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/of-teacher/{{teacherId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "of-teacher", "{{teacherId}}"]
+						}
+					}
+				},
+				{
+					"name": "C4 - Students of a teacher (404 Not Found)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/students/of-teacher/01234567-89ab-cdef-0123-456789abcdef",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "students", "of-teacher", "01234567-89ab-cdef-0123-456789abcdef"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Part D: Business Rules",
+			"item": [
+				{
+					"name": "D1 - Safe saving (Success)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assessmentDate\": \"2026-11-25\",\n    \"title\": \"Chemistry Lab Test\",\n    \"maxScore\": 50,\n    \"student\": {\n        \"id\": \"{{studentId}}\"\n    },\n    \"teacher\": {\n        \"id\": \"{{teacherId}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "save"]
+						}
+					}
+				},
+				{
+					"name": "D1 - Safe saving (400 Past Date)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assessmentDate\": \"2020-01-01\",\n    \"title\": \"Expired Assessment\",\n    \"maxScore\": 50,\n    \"student\": {\n        \"id\": \"{{studentId}}\"\n    },\n    \"teacher\": {\n        \"id\": \"{{teacherId}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "save"]
+						}
+					}
+				},
+				{
+					"name": "D1 - Safe saving (409 Conflict Same Teacher Date)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"assessmentDate\": \"2026-10-20\",\n    \"title\": \"Duplicate Date Assessment\",\n    \"maxScore\": 50,\n    \"student\": {\n        \"id\": \"{{studentId}}\"\n    },\n    \"teacher\": {\n        \"id\": \"{{teacherId}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/save",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "save"]
+						}
+					}
+				},
+				{
+					"name": "D2 - Status flow (Success)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/{{plannedAssessmentId}}/status?status=SAT",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "{{plannedAssessmentId}}", "status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "SAT"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "D2 - Status flow (400 Invalid Move)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/{{gradedAssessmentId}}/status?status=PLANNED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "{{gradedAssessmentId}}", "status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "PLANNED"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "D2 - Status flow (404 Not Found)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/01234567-89ab-cdef-0123-456789abcdef/status?status=SAT",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "01234567-89ab-cdef-0123-456789abcdef", "status"],
+							"query": [
+								{
+									"key": "status",
+									"value": "SAT"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "D3 - Add course to teacher (Success)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/{{teacherDavidId}}/courses/{{courseId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "{{teacherDavidId}}", "courses", "{{courseId}}"]
+						}
+					}
+				},
+				{
+					"name": "D3 - Add course to teacher (409 Conflict Already Has Course)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/{{teacherId}}/courses/{{courseId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "{{teacherId}}", "courses", "{{courseId}}"]
+						}
+					}
+				},
+				{
+					"name": "D4 - Move teacher to another class group (Success)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/{{teacherDavidId}}/class-group?groupNumber=4",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "{{teacherDavidId}}", "class-group"],
+							"query": [
+								{
+									"key": "groupNumber",
+									"value": "4"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "D4 - Move teacher to another class group (409 Conflict Taken)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/teachers/{{teacherDavidId}}/class-group?groupNumber=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "teachers", "{{teacherDavidId}}", "class-group"],
+							"query": [
+								{
+									"key": "groupNumber",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Part E: Score Entry Entity",
+			"item": [
+				{
+					"name": "E1 - Write a score entry (Success)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"component\": \"Quiz\",\n    \"comment\": \"Good understanding of the topic\",\n    \"score\": 18\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/score-entries/save?assessmentId={{gradedAssessmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "score-entries", "save"],
+							"query": [
+								{
+									"key": "assessmentId",
+									"value": "{{gradedAssessmentId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "E1 - Write a score entry (400 Not GRADED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"component\": \"Quiz\",\n    \"comment\": \"Premature grading\",\n    \"score\": 15\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/score-entries/save?assessmentId={{plannedAssessmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "score-entries", "save"],
+							"query": [
+								{
+									"key": "assessmentId",
+									"value": "{{plannedAssessmentId}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "E2 - Score entry history of a student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/score-entries/student/{{studentNumber}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "score-entries", "student", "{{studentNumber}}"]
+						}
+					}
+				},
+				{
+					"name": "E3 - Delete assessment protected (409 Conflict)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/delete/{{gradedAssessmentId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "delete", "{{gradedAssessmentId}}"]
+						}
+					}
+				},
+				{
+					"name": "E3 - Delete score entry (404 Not Found)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/score-entries/delete/01234567-89ab-cdef-0123-456789abcdef",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "score-entries", "delete", "01234567-89ab-cdef-0123-456789abcdef"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Part F: Reports and Bulk Updates",
+			"item": [
+				{
+					"name": "F1 - Assessments per status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/stats/by-status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "stats", "by-status"]
+						}
+					}
+				},
+				{
+					"name": "F2 - Teacher is absent",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/cancel-day?teacherId={{teacherId}}&date=2026-10-20",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "cancel-day"],
+							"query": [
+								{
+									"key": "teacherId",
+									"value": "{{teacherId}}"
+								},
+								{
+									"key": "date",
+									"value": "2026-10-20"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bonus Requirements (+10)",
+			"item": [
+				{
+					"name": "Bonus - Dashboard summary (+5)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/dashboard/summary",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "dashboard", "summary"]
+						}
+					}
+				},
+				{
+					"name": "Bonus - Assessments page by page (+5)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assessments/page?page=0&size=5&sort=assessmentDate,desc",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "assessments", "page"],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sort",
+									"value": "assessmentDate,desc"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
