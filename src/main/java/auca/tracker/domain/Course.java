@@ -57,6 +57,6 @@ public class Course {
     }
 
     public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
+        this.teachers = s;
     }
 }
