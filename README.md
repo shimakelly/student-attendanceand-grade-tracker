@@ -3,7 +3,6 @@
 **Mid-Term Project Examination – Building the Student Attendance and Grade Tracker Backend**  
 **Institution:** Adventist University of Central Africa (AUCA)  
 **Course:** Web Technology and Internet  
-**lecture:** DUSHIMIMANA Patrick
 **Student Name:** SHIMA Kelly Guy  
 **Student ID:** 27114  
 **Project Name:** Student Attendance and Grade Tracker  
